@@ -191,21 +191,21 @@ class GSEA():
  
     
 #### run 
-#def main():
-expfile = 'GSE25628_filtered_expression.txt' #sys.argv[1] #
-sampfile =  'GSE25628_samples.txt' #sys.argv[2] #
-keggfile = 'c2.cp.kegg.v6.2.symbols.filtered.gmt'#sys.argv[3] #
+def main():
+  expfile =sys.argv[1] # 'GSE25628_filtered_expression.txt' #
+  sampfile =  sys.argv[2] #'GSE25628_samples.txt' #
+  keggfile = sys.argv[3] #'c2.cp.kegg.v6.2.symbols.filtered.gmt'#
 
-gsea = GSEA(expfile,sampfile,keggfile)
-gsea.true_rank()
-gsea.compute_ranks()  
-gsea.random_walk()
-o = gsea.output_es() # output toa file
-pval = gsea.p_value()
-print('Number of Significant pathways=',np.array(np.array([v for k,v in pval.items()])< 0.05/145.0).sum())
-max_es = gsea.max_es()
+  gsea = GSEA(expfile,sampfile,keggfile)
+  gsea.true_rank()
+  gsea.compute_ranks()  
+  gsea.random_walk()
+  o = gsea.output_es() # output toa file
+  pval = gsea.p_value()
+  print('Number of Significant pathways=',np.array(np.array([v for k,v in pval.items()])< 0.05/145.0).sum())
+  max_es = gsea.max_es()
 
 
-# if __name__ == '__main__':
-#   main()
-#   # python3 gsea.py  GSE25628_filtered_expression.txt  GSE25628_samples.txt c2.cp.kegg.v6.2.symbols.filtered.gmt
+if __name__ == '__main__':
+  main()
+# python3 gsea.py  GSE25628_filtered_expression.txt  GSE25628_samples.txt c2.cp.kegg.v6.2.symbols.filtered.gmt

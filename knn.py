@@ -45,7 +45,7 @@ class  KNN():
   
   def loo(self):
     """
-    A method to retunr a training set and a test set.
+    A method to return a training set and a test set.
     get the indices for leave one out for all sets
     return-
       a list of lists [[train_index], [test_index]]
@@ -161,8 +161,7 @@ def main():
 
   cm = (pd.DataFrame({'sample':sample,'y_pred':y_pred,'y_true':y_true}))
   #
-  # write to file
-  cm[['sample','y_pred']].to_csv('sample_assignments.txt',sep = '\t',header=False)
+  cm[['sample','y_pred']].to_csv('sample_assignments.txt',sep = '\t',header=False,index = False)
   # output to crt
   sens, spec = knn.cm(cm)
   print('sensitivity: ',sens)

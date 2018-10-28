@@ -1,7 +1,6 @@
 import pandas as pd
 from itertools import permutations
 import numpy as np
-import matplotlib.pyplot as plt
 import random
 import sys
 
@@ -11,10 +10,13 @@ class GSEA():
   def __init__(self,expfile,sampfile,keggfile):
     """
     Initialize the GSEA class with file names
-
+    input - 
     expfile -  gene expression file
     smplfile -  samples for healthy and sick individuals
     keggfile -  a file with gene set assignments.
+
+    output -
+      returns multiple objets read /transformed files and dictionaries.
     """
 
     self.expression = pd.read_table(expfile,sep = '\t')
@@ -45,6 +47,9 @@ class GSEA():
   def random_walk(self):
     """
     Take a gene set and look at the ranked list that we have and compute if it is toward the  up regulated or under regulated
+
+    output - 
+      dictionary object kegg_es, keyed by genes form the gene set where the value for each is the set of suffled  brownian bridge.
     """
     #
     for kegg_k, gene_set in [(k,v) for k,v in self.kegg_dict.items()]:  # pick a bunch of genes
@@ -66,16 +71,14 @@ class GSEA():
       self.kegg_es[kegg_k] = self.es_dict
       self.es_dict = {}
 
-  def show_trace(self,gene_name):
-    """
-    A method to return the traces for the gene set
-    """
-    self.kegg_es['gene_name']
+
 
 
   def output_es(self):
     """
     A method to output the ES for the gene set before shuffling the sample expression data
+    output -  retrurns an object containing the gene sets and the corresponding  ESs.
+    This is sorted and written to a file.
     """
     rows = []
    
@@ -93,6 +96,9 @@ class GSEA():
   def p_value(self,cutoff=0.05):
     """
     A method to return the gene sets where enrichment 
+    
+    output - 
+      returns a list of p values.
     """
     p_val ={}
     for k,v in self.kegg_es.items():
@@ -149,8 +155,8 @@ class GSEA():
   def set_data(self):
     """
     A method to set the data in the right  format
-    
-    It basically returns two data frames with the samples as indices
+    output - 
+    returns two data frames with the samples as indices
     no input or output.
     """
     # take care of samples
@@ -159,13 +165,11 @@ class GSEA():
     self.samples  = pd.DataFrame(patients,index = samples,columns = ['patient']) # indexed by sample
     #
     self.expression = self.expression.set_index('SYMBOL')
-    # # take care of expression data
-    # self.data = pd.merge(self.expression,self.samples,left_index = True,right_index=True) # merged data sets
-    # #pd.merge(df1,df2,how = 'left',left_index=True,right_index=True) # do a left join
+    
 
   def kegg_genes(self):
     """
-    A method to return the number of unique genes in the  KEGG set
+    A method to return the number of unique genes in the  KEGG set for quiz.
     """
     gene_pool = []
     uniq = {} # a dictionary to hold the counts of genes.
